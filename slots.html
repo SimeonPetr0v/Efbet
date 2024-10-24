@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casino Slot Machine</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    
+    .slot-machine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(145deg, #555, #222);
+      padding: 20px;
+      border-radius: 20px;
+      width: 350px;
+      height: 550px;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+      border: 10px solid #b30000;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      overflow: hidden;
+    }
+
+    
+    .slot-machine-header {
+      background-color: #ffcc00;
+      color: #000;
+      width: 300px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+      text-shadow: 2px 2px 2px #444;
+    }
+
+    
+    .slots {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: #333;
+      border-radius: 10px;
+      padding: 10px;
+      width: 300px;
+      height: 150px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    
+    .slot {
+      width: 100px;
+      height: 130px;
+      margin: 0 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border: 5px solid #444;
+      border-radius: 10px;
+      font-size: 3rem;
+      color: #333;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .slot div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slot div span {
+      display: block;
+      text-align: center;
+      line-height: 130px;
+    }
+
+   
+    #spin {
+      background-color: #ff3300;
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 3px #000;
+    }
+
+    #spin:active {
+      background-color: #e62e00;
+    }
+
+    
+    .lever {
+      position: absolute;
+      right: -20px;
+      top: 150px;
+      width: 40px;
+      height: 200px;
+      background-color: #888;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.5s ease;
+      z-index: 1;
+    }
+
+    .lever-ball {
+      width: 50px;
+      height: 50px;
+      background-color: #ff3300;
+      border-radius: 50%;
+      border: 3px solid #555;
+      position: absolute;
+      bottom: -30px;
+      z-index: 2;
+    }
+
+    
+    .slot span {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #000;
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6);
+    }
+
+    
+    .company-logo {
+      margin-top: 30px;
+      width: 250px;
+      height: auto;
+    }
+
+    
+    .winning-animation {
+      animation: flash 1s infinite alternate;
+    }
+
+    @keyframes flash {
+      0% {
+        background-color: #ff0000;
+      }
+      100% {
+        background-color: #ffff00;
+      }
+    }
+
+    
+    .winning-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 3px 3px 5px #000;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slot-machine" id="slotMachine">
+    <div class="slot-machine-header">SLOT MACHINE</div>
+
+    <div class="slots">
+      <div class="slot" id="slot1"><div><span>7</span></div></div>
+      <div class="slot" id="slot2"><div><span>7</span></div></div>
+      <div class="slot" id="slot3"><div><span>7</span></div></div>
+    </div>
+
+    <button id="spin">SPIN</button>
+
+   
+    <div class="lever" id="lever">
+      <div class="lever-ball"></div>
+    </div>
+
+    
+    <img src="logo.png" alt="Company Logo" class="company-logo">
+
+    
+    <div class="winning-message" id="winningMessage">YOU WIN!</div>
+  </div>
+
+  <script>
+    const slot1 = document.getElementById("slot1").querySelector("span");
+    const slot2 = document.getElementById("slot2").querySelector("span");
+    const slot3 = document.getElementById("slot3").querySelector("span");
+    const spinButton = document.getElementById("spin");
+    const lever = document.getElementById("lever");
+    const slotMachine = document.getElementById("slotMachine");
+    const winningMessage = document.getElementById("winningMessage");
+
+    const numbers = ['7', '1', '2', '3', '4', '5', '6', '8', '9'];
+    let spinCount = 0;
+    const maxSpins = 15;
+
+    
+    function getRandomNumber() {
+      return numbers[Math.floor(Math.random() * numbers.length)];
+    }
+
+    
+    function spinSlot(slotElement, delay) {
+      return new Promise((resolve) => {
+        const spinning = setInterval(() => {
+          slotElement.textContent = getRandomNumber();
+        }, 50);
+
+        setTimeout(() => {
+          clearInterval(spinning); 
+          slotElement.textContent = getRandomNumber(); 
+          resolve(); 
+        }, delay); 
+      });
+    }
+
+    
+    function checkWin() {
+      if (slot1.textContent === '7' && slot2.textContent === '7' && slot3.textContent === '7') {
+        winningAnimation();
+      }
+    }
+
+    
+    function animateLever() {
+      lever.style.transform = 'rotate(30deg)';
+      setTimeout(() => {
+        lever.style.transform = 'rotate(0deg)';
+      }, 500);
+    }
+
+    
+    function winningAnimation() {
+      slotMachine.classList.add('winning-animation');
+      winningMessage.style.display = 'block';
+
+      setTimeout(() => {
+        window.location.href = 'home.html'; 
+      }, 3000);
+    }
+
+    
+    spinButton.addEventListener('click', async function() {
+      spinCount++;
+      animateLever();
+
+      if (spinCount >= maxSpins) {
+        
+        slot1.textContent = '7';
+        slot2.textContent = '7';
+        slot3.textContent = '7';
+        checkWin();
+      } else {
+        
+        const slot1Promise = spinSlot(slot1, 1000); 
+        const slot2Promise = spinSlot(slot2, 2000); 
+        const slot3Promise = spinSlot(slot3, 3000); 
+
+        await Promise.all([slot1Promise, slot2Promise, slot3Promise]);
+
+        
+        checkWin();
+      }
+    });
+  </script>
+</body>
+</html>

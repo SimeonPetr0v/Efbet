@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Aviator Game</title>
+    <link rel="stylesheet" href="EfbetStyle.css">
+</head>
+<body>
+    <h1>Aviator Game</h1>
+    <div class="game-container">
+        <div id="game-info">
+            <p>Balance: <span id="balance">100</span> coins</p>
+            <p>Multiplier: <span id="multiplier">1.00x</span></p>
+            <p>Bet: <input type="number" id="bet-amount" value="10"> coins</p>
+            <p>Game starts in: <span id="countdown">5</span> seconds</p>
+            <button id="cashout-btn" disabled>Cash Out</button>
+            <button id="reset-btn" disabled>Reset</button>
+            <p id="result-message">Place your bet before the game starts!</p>
+        </div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+    </div>
+
+    <script src="aviator.js"></script>
+</body>
+</html>
